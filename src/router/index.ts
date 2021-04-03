@@ -1,13 +1,19 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import Rank from '../views/rank/rank.vue'
 const routes: Array<RouteRecordRaw> = [
     {
-        path: "/",
+        path: '/',
+        redirect: '/recommend',
+        component: () => import("../views/recommend/recommend.vue"),
+    },
+    {
+        path: "/recommend",
         name: "Recommand",
         meta: {
             title: "推荐",
             keepAlive: true
         },
-        component: () => import("../views/recommend.vue"),
+        component: () => import("../views/recommend/recommend.vue"),
     },
     {
         path: "/singer",
@@ -16,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
             title: "歌手",
             keepAlive: true
         },
-        component: () => import("../views/singer.vue"),
+        component: () => import("../views/singer/singer.vue"),
     },
     {
         path: "/rank",
@@ -25,7 +31,9 @@ const routes: Array<RouteRecordRaw> = [
             title: "歌手",
             keepAlive: true
         },
-        component: () => import("../views/rank.vue"),
+        component: Rank
+        // component: () => import("../views/rank.vue"),
+
     },
     {
         path: "/search",
@@ -34,7 +42,15 @@ const routes: Array<RouteRecordRaw> = [
             title: "搜索",
             keepAlive: true
         },
-        component: () => import("../views/search.vue"),
+        component: () => import("../views/search/search.vue"),
+    },
+    {
+        path: "/user",
+        name: "User",
+        meta: {
+            title: "搜索",
+        },
+        component: () => import("../views/mine/mine.vue"),
     },
 ];
 const router = createRouter({

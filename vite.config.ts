@@ -8,7 +8,9 @@ export default defineConfig({
   resolve: {
     alias: {
       'src': path.resolve(__dirname, 'src'),
-      'common': path.resolve(__dirname, 'src/common') 
+      'common': path.resolve(__dirname, 'src/common'),
+      'components': path.resolve(__dirname, 'src/components'),
+      'api': path.resolve(__dirname, 'src/api'),
 
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
@@ -23,7 +25,9 @@ export default defineConfig({
     // 代理
     proxy: {
       '/api': {
-        target: 'http://jsonplaceholder.typicode.com',
+        // https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg
+        // https://jobzeng.cn/api/getDiscList
+        target: 'https://jobzeng.cn/api/getDiscList',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
