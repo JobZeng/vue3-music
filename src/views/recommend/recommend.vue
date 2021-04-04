@@ -1,20 +1,29 @@
 <template>
-  <div class="recommend">
-    <scroll class="recommend-content" :data="recommendList.value" ref="scrollRef">
+  <div class="recommend"> 
+    
+    <scroll
+      class="recommend-content"
+      :data="recommendList.value"
+      ref="scrollRef"
+    >
       <div>
         <div class="slide-wrapper">
           <div class="slide-content">
-            <slide></slide>
+            <slide > </slide>
           </div>
         </div>
         <div class="recommend-list">
           <h1 class="list-title">热门歌单推荐</h1>
-          <div class="item" v-for="(item, index) in recommendList.value" :key="index">
+          <div
+            class="item"
+            v-for="item in recommendList.value"
+            :key="item.dissid"
+          >
             <div class="icon">
-              <img @load="loadImage" :src="item.imgurl" alt="">
+              <img @load="loadImage" :src="item.imgurl" alt="" />
             </div>
             <div class="text">
-              <h2 class="name" >{{item.creator.name}}</h2>
+              <h2 class="name">{{ item.creator.name }}</h2>
               <p class="desc" v-html="item.dissname"></p>
             </div>
           </div>
@@ -24,85 +33,52 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { reactive, onMounted, ref } from "vue";
 import Slide from "components/slide/slide.vue";
 import Scroll from "components/scroll/scroll.vue";
-import { getRecommend, getDiscList } from "api/recommend.js";
+import { getDiscList } from "api/recommend.ts";
+import { ERR_OK } from "api/config.ts";
 
-export default {
+export default defineComponent({
   components: {
     Scroll,
     Slide,
   },
-
-  data() {
-    return {
-      emojis: [
-        "😀 😁 😂 🤣 😃",
-        "😄 😅 😆 😉 😊",
-        "😫 😴 😌 😛 😜",
-        "👆🏻 😒 😓 😔 👇🏻",
-        "😑 😶 🙄 😏 😣",
-        "😞 😟 😤 😢 😭",
-        "🤑 😲 🙄 🙁 😖",
-        "👍 👎 👊 ✊ 🤛",
-        "🙄 ✋ 🤚 🖐 🖖",
-        "👍🏼 👎🏼 👊🏼 ✊🏼 🤛🏼",
-        "☝🏽 ✋🏽 🤚🏽 🖐🏽 🖖🏽",
-        "🌖 🌗 🌘 🌑 🌒",
-        "💫 💥 💢 💦 💧",
-        "🐠 🐟 🐬 🐳 🐋",
-        "😬 😐 😕 😯 😶",
-        "😇 😏 😑 😓 😵",
-        "🐥 🐣 🐔 🐛 🐤",
-        "💪 ✨ 🔔 ✊ ✋",
-        "👇 👊 👍 👈 👆",
-        "💛 👐 👎 👌 💘",
-        "👍🏼 👎🏼 👊🏼 ✊🏼 🤛🏼",
-        "☝🏽 ✋🏽 🤚🏽 🖐🏽 🖖🏽",
-        "🌖 🌗 🌘 🌑 🌒",
-        "💫 💥 💢 💦 💧",
-        "🐠 🐟 🐬 🐳 🐋",
-        "😬 😐 😕 😯 😶",
-        "😇 😏 😑 😓 😵",
-        "🐥 🐣 🐔 🐛 🐤",
-        "💪 ✨ 🔔 ✊ ✋",
-        "👇 👊 👍 👈 👆",
-        "💛 👐 👎 👌 💘",
-      ],
-    };
-  },
   setup() {
-    const recommendList = reactive(new Array());
+    // 初始化一些响应式数据
+    const recommendList:any = reactive(new Array());
     const scrollRef = ref(null);
-    const loadImage = () => {
-      
-    }
-    onMounted(() => {
-      // console.log()
-      const result = getRecommend();
-      result.then((res) => {
-        // console.log(res);
-      });
-      getDiscList().then((res) => {
-        recommendList.value = res.data.list;
-        // console.log(recommendList.value);
-      });
-      // scrollRef.value.refresh()
 
+    const loadImage = () => {};
+    // 网络请求，获取数据
+    onMounted(() => {
+      _getDiscList();
     });
+    // 获取歌单
+    const _getDiscList = () => {
+      getDiscList().then((res: any) => {
+        console.log(typeof res);
+        
+        if (res.code === ERR_OK) {
+          recommendList.value = res.data.list;
+          // console.log(recommendList.value);
+        }
+      });
+    };
+    
     return {
       recommendList,
       scrollRef,
-      loadImage
+      loadImage,
     };
   },
-};
+});
 </script>
 
 <style lang="less">
-@import 'common/less/variable.less';
+@import "common/less/variable.less";
 .recommend {
   position: fixed;
   width: 100%;
@@ -147,10 +123,10 @@ export default {
           flex: 0 0 60px;
           width: 60px;
           padding-right: 20px;
-            img {
-              width: 60px;
-              height: 60px
-            }
+          img {
+            width: 60px;
+            height: 60px;
+          }
         }
 
         .text {

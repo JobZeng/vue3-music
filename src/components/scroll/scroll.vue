@@ -4,10 +4,10 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script type="ts">
 import BScroll from "@better-scroll/core";
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
-export default {
+import { ref, onMounted, onBeforeUnmount, watch,defineComponent } from "vue";
+export default defineComponent({
   props: {
     data: {
       type: Array,
@@ -28,15 +28,15 @@ export default {
         probeType: 3,
         click: true,
       });
-      bs.on("scrollStart", () => {
-        console.log("scrollStart-");
-      });
-      bs.on("scroll", ({ y }) => {
-        console.log("scrolling-");
-      });
-      bs.on("scrollEnd", (pos) => {
-        console.log(pos);
-      });
+      // bs.on("scrollStart", () => {
+      //   console.log("scrollStart-");
+      // });
+      // bs.on("scroll", ({ y }) => {
+      //   console.log("scrolling-");
+      // });
+      // bs.on("scrollEnd", (pos) => {
+      //   console.log(pos);
+      // });
     };
     const refresh = () => {
       bs && bs.refresh()
@@ -51,7 +51,7 @@ export default {
       refresh
     };
   },
-};
+});
 </script>
 <style lang="less" rel="stylesheet/less" scoped>
 .scroll-wrapper {

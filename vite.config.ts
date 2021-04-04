@@ -1,17 +1,17 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-// https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [vue()],
   base: './',
   resolve: {
+    // 配置别名
     alias: {
       'src': path.resolve(__dirname, 'src'),
       'common': path.resolve(__dirname, 'src/common'),
       'components': path.resolve(__dirname, 'src/components'),
       'api': path.resolve(__dirname, 'src/api'),
-
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   },
@@ -26,10 +26,9 @@ export default defineConfig({
     proxy: {
       '/api': {
         // https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg
-        // https://jobzeng.cn/api/getDiscList
-        target: 'https://jobzeng.cn/api/getDiscList',
+        target: 'https://jobzeng.cn',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+
       }
     }
   }

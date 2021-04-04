@@ -1,5 +1,5 @@
 // 导入封装好的jsonp方法
-import jsonp from 'common/js/jsonp'
+import jsonp from 'common/js/jsonp.ts'
 // 导入自己写好的一些公共配置
 import { commonParams, options } from './config'
 import axios from 'axios'
@@ -21,7 +21,7 @@ export function getRecommend() {
 export function getDiscList() {
     // 线上环境地址，同学们根据自己的需要配置修改
     // const url = debug ? '/api/getDiscList' : 'http://localhost:8080/api/getDiscList'
-    const url = '/api'
+    const url = '/api/getDiscList'
   
     const data = Object.assign({}, commonParams, {
       platform: 'yqq',
